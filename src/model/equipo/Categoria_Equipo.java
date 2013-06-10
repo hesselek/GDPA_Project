@@ -3,18 +3,22 @@ package model.equipo;
 public enum Categoria_Equipo {
 	
 	Ropa("Ropa"), Comida("Comida y Alojamiento Diario"),Provisiones("Provisiones para Casa"),
-	Tachas("Tachas y Arneses"),Vario("Equipo vario"),Transporte("Transporte"),Animales("Animales"),
+	Tachas("Tachas y Arneses"),Varios("Equipo vario"),Transporte("Transporte"),Animales("Animales"),
 	Servicios("Servicios"),Armaduras("Armaduras"),Armas("Armas");
 	
-	private String categoria;
+	private String value;
 
 	private Categoria_Equipo(String categoria) {
-		this.categoria = categoria;
+		this.value = categoria;
 	}
 
 	public String getCategoria() {
-		return categoria;
+		return value;
 	}
-	
+	@Override
+	public String toString(){
+		return value;
+		
+	}
 	
 }

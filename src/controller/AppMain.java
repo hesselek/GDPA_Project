@@ -91,9 +91,10 @@ public class AppMain {
 	//	carlos c = new carlos();
 		
 	//	c.open();
+		
 	*/
 
-	}
+}
 	protected void launchVentana() {
 		guiController.launch();
 		

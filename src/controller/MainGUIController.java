@@ -1,22 +1,25 @@
 package controller;
 
-import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
+import javax.persistence.EntityManager;
 import javax.swing.UIManager;
-
 import model.PersistenceUnit;
-
+import model.equipo.ItemEquipo;
+import view.Equipo;
 import view.MainGUI;
+import view.NuevoItemEquipo;
+
 
 public class MainGUIController {
 	
 	private MainGUI frame;
-	private JInternalFrame equipo;
+	private Equipo equipo;
+	private NuevoItemEquipo nuevoItemEquipo;
+	private PersistenceUnit persistence;
 
 	public MainGUIController(PersistenceUnit persistence) {
+		this.persistence = persistence;
 		//this.frame = frame;
 	}
 
@@ -34,31 +37,47 @@ public class MainGUIController {
 	}
 
 
-
 	public void DialogoEquipo() {
-		if(equipo == null){
-			equipo = new JInternalFrame("Equipo");
-			equipo.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
-			equipo.setResizable(true);
-			equipo.setMaximizable(true);
-			equipo.setIconifiable(true);
-			equipo.setClosable(true);
-			equipo.setBounds(90, 107, 385, 186);
+	if(equipo == null){
+			equipo = new Equipo(this);
 			frame.getDesktopPane().add(equipo);
-		
-			JPanel panel = new JPanel();
-			equipo.getContentPane().add(panel, BorderLayout.CENTER);
+	
+		}else{
 			equipo.setVisible(true);
-		}
-		else{
-			try {
-				equipo.setVisible(true);
-				equipo.setMaximum(true);
-			} catch (PropertyVetoException e) {
-				e.printStackTrace();
-			}
+	
+		}	
+		
+	}
+
+
+
+	public void nuevoItem() {
+		if(nuevoItemEquipo == null){
+			nuevoItemEquipo = new NuevoItemEquipo(this);
+			frame.getDesktopPane().add(nuevoItemEquipo);
+		}else{		
+				nuevoItemEquipo.setVisible(true);
 		}
 		
 	}
+
+
+
+	public void addItem(ItemEquipo item) {
+		
+		// TODO Auto-generated method stub
+		EntityManager em = persistence.getFactory().createEntityManager();
+		 em.getTransaction().begin();
+		 em.persist(item);
+		
+		 em.getTransaction().commit();
+	
+		 em.close();
+		 System.out.println("Aqui");
+	}
+
+
+
+	
 
 }

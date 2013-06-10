@@ -8,13 +8,19 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+
+import view.Equipo;
+
 import org.jdesktop.swingx.JXStatusBar;
 import controller.MainGUIController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
+import java.awt.Component;
 import java.awt.SystemColor;
+import java.awt.FlowLayout;
+import java.awt.Dimension;
 
 
 public class MainGUI extends JFrame {
@@ -34,7 +40,7 @@ public class MainGUI extends JFrame {
 	 */
 	public MainGUI(MainGUIController gUIController) {
 		this.guiController = gUIController;
-		setDefaultLookAndFeelDecorated(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 619, 511);
 		JMenuBar menuBar = new JMenuBar();
@@ -58,6 +64,14 @@ public class MainGUI extends JFrame {
 			
 		});
 		mnEquipo.add(mntmVerEquipo);
+		
+		JMenuItem mntmNuevoItem = new JMenuItem("Nuevo Item");
+		mntmNuevoItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dialogoNuevoEquipo();
+			}
+		});
+		mnEquipo.add(mntmNuevoItem);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
@@ -67,21 +81,28 @@ public class MainGUI extends JFrame {
 		desktopPane.setBorder(null);
 		desktopPane.setBackground(SystemColor.activeCaptionBorder);
 		contentPane.add(desktopPane, BorderLayout.CENTER);
-		desktopPane.setLayout(null);
+		
+		
+		
 		
 		
 		
 		JXStatusBar status = new JXStatusBar();
 		status.setBorder(null);
-		status.setPreferredSize(getPreferredSize());
+		status.setPreferredSize(new Dimension(106, 25));
 		
 		contentPane.add(status, BorderLayout.SOUTH);	
 		
 	}
 	
 	
-	private void DialogoEquipo() {
+	protected void dialogoNuevoEquipo() {
+		this.guiController.nuevoItem();
 		
+	}
+
+
+	private void DialogoEquipo() {
 		this.guiController.DialogoEquipo();
 		
 	}
@@ -90,6 +111,7 @@ public class MainGUI extends JFrame {
 	public JDesktopPane getDesktopPane() {
 		return desktopPane;
 	}
-	
+
+
 	
 }

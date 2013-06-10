@@ -7,30 +7,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Equipo {
-	private byte categoria;
+public class ItemEquipo {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "nombre", unique=true, nullable=false)
 	private String nombre;
-	private int peso;
+	private byte categoria;
+	private long peso;
 	private int precioMin;
 	private int precioMax;
-	private Equipo equipo;
+	private ItemEquipo equipo;
 	
-	public Equipo(){
+	public ItemEquipo(){
 		
 	}
-	
-	public Equipo(byte categoria, String nombre, int peso, int precioMin,
-			int precioMax, Equipo equipo) {
-		this.categoria = categoria;
+
+	public ItemEquipo(String nombre, byte categoria, long peso, int precioMin,
+			int precioMax, ItemEquipo equipo) {
+		super();
 		this.nombre = nombre;
+		this.categoria = categoria;
 		this.peso = peso;
 		this.precioMin = precioMin;
 		this.precioMax = precioMax;
 		this.equipo = equipo;
 	}
+	
 	
 	
 	
