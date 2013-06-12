@@ -3,6 +3,7 @@ package view;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -13,48 +14,51 @@ import controller.MainGUIController;
 import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
 import javax.swing.JCheckBox;
-
 import model.equipo.Categoria_Equipo;
 import model.equipo.Coin;
-import model.equipo.ItemEquipo;
-
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
-import java.awt.Component;
-import java.awt.GridLayout;
 import javax.swing.JSeparator;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
 import javax.swing.JButton;
 import java.awt.event.KeyEvent;
 import javax.swing.ButtonGroup;
+import java.awt.Component;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class NuevoItemEquipo extends JInternalFrame {
+
+	private static final long serialVersionUID = 1L;
 	private MainGUIController mainGUIController;
 	private JTextField textNombre;
 	private JComboBox comboGrupo;
 	private JTextField textPrecio;
 	private JTextField textPeso;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JComboBox comboMax;
-	private JComboBox comboMin;
-	private JComboBox comboMoneda;
-	private JComboBox comboCategoria;
-	private JTextField textField_3;
+	private JTextField textGrupo;
+	private JTextField textPrecioMin;
+	private JTextField textPrecioMax;
+	private JComboBox<Coin> comboMax;
+	private JComboBox<Coin> comboMin;
+	private JComboBox<Coin> comboMoneda;
+	private JComboBox<Categoria_Equipo> comboCategoria;
+	private JTextField textPrecioEspecial;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JPanel panelOpciones;
+	private JButton btnMasDetalles;
+	private DefaultComboBoxModel<Coin>moneda;
+	private DefaultComboBoxModel<Categoria_Equipo>categoria;
 
-	public NuevoItemEquipo(MainGUIController mainGUIController) {
+
+	public NuevoItemEquipo(final MainGUIController mainGUIController) {
 		super("Nuevo Equipo",true,true,true,true);
+		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
+		
 		this.mainGUIController = mainGUIController;
+		moneda = new DefaultComboBoxModel<Coin>(Coin.values());
+		categoria = new DefaultComboBoxModel<Categoria_Equipo>(Categoria_Equipo.values());
 		setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		try {
 			setSelected(true);
@@ -62,14 +66,16 @@ public class NuevoItemEquipo extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setBounds(100, 100, 404, 542);
+		setBounds(100, 100, 450, 724);
 		
 		JPanel container = new JPanel();
+		container.setAlignmentX(Component.LEFT_ALIGNMENT);
+		container.setAlignmentY(Component.TOP_ALIGNMENT);
 		getContentPane().add(container, BorderLayout.WEST);
 		
 		JPanel panel = new JPanel();
 		
-		JPanel panel_1 = new JPanel();
+		panelOpciones = new JPanel();
 		
 		JPanel panel_2 = new JPanel();
 		
@@ -78,61 +84,81 @@ public class NuevoItemEquipo extends JInternalFrame {
 		gl_container.setHorizontalGroup(
 			gl_container.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_container.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_container.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_container.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(panel_1, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-							.addComponent(panel_2, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 385, Short.MAX_VALUE))
-						.addGroup(gl_container.createParallelGroup(Alignment.TRAILING, false)
-							.addGroup(Alignment.LEADING, gl_container.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(separator))
-							.addComponent(panel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 382, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(11, Short.MAX_VALUE))
+						.addGroup(gl_container.createSequentialGroup()
+							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(gl_container.createSequentialGroup()
+							.addComponent(panelOpciones, 0, 0, Short.MAX_VALUE)
+							.addGap(17))))
+				.addGroup(gl_container.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_container.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_container.createSequentialGroup()
+							.addGap(10)
+							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(17, Short.MAX_VALUE))
 		);
 		gl_container.setVerticalGroup(
 			gl_container.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_container.createSequentialGroup()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 265, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelOpciones, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(19, Short.MAX_VALUE))
+					.addContainerGap(5, Short.MAX_VALUE))
 		);
+		gl_container.linkSize(SwingConstants.HORIZONTAL, new Component[] {panel, panelOpciones, panel_2});
 		
 		JButton btnGuardar = new JButton("Guardar");
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		
-		JButton btnMasDetalles = new JButton("Mas Detalles");
+		btnMasDetalles = new JButton("Mas Detalles");
+		btnMasDetalles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				opciones();
+			}
+
+			
+		});
 		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				salir();
+			}
+		});
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
+					.addGap(10)
 					.addComponent(btnGuardar, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(6)
 					.addComponent(btnCancelar)
+					.addGap(6)
+					.addComponent(btnMasDetalles)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnMasDetalles, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnSalir, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-					.addGap(38))
+					.addComponent(btnSalir, GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+					.addGap(11)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnSalir)
 						.addComponent(btnGuardar)
 						.addComponent(btnCancelar)
-						.addComponent(btnMasDetalles)
-						.addComponent(btnSalir))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(btnMasDetalles))
+					.addContainerGap())
 		);
 		panel_2.setLayout(gl_panel_2);
 		
@@ -141,10 +167,15 @@ public class NuevoItemEquipo extends JInternalFrame {
 		
 		JLabel lblNuevoGrupo = new JLabel("Nuevo Grupo:");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		textGrupo = new JTextField();
+		textGrupo.setColumns(10);
 		
 		JButton btnNewButton = new JButton("A\u00F1adir");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainGUIController.nuevoGrupo();
+			}
+		});
 		
 		JSeparator separator_1 = new JSeparator();
 		
@@ -182,63 +213,67 @@ public class NuevoItemEquipo extends JInternalFrame {
 					.addContainerGap(86, Short.MAX_VALUE))
 		);
 		panel_4.setLayout(gl_panel_4);
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		GroupLayout gl_panelOpciones = new GroupLayout(panelOpciones);
+		gl_panelOpciones.setHorizontalGroup(
+			gl_panelOpciones.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelOpciones.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(86, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-					.addGap(28)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_4, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-						.addComponent(panel_3, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 335, Short.MAX_VALUE)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(lblNuevoGrupo)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))
-					.addGap(101))
+					.addGroup(gl_panelOpciones.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelOpciones.createSequentialGroup()
+							.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(gl_panelOpciones.createParallelGroup(Alignment.TRAILING)
+							.addGroup(gl_panelOpciones.createSequentialGroup()
+								.addGroup(gl_panelOpciones.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(panel_4, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+									.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addContainerGap(19, Short.MAX_VALUE))
+							.addGroup(gl_panelOpciones.createSequentialGroup()
+								.addComponent(lblNuevoGrupo)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(textGrupo, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+								.addGap(101)))))
 		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		gl_panelOpciones.setVerticalGroup(
+			gl_panelOpciones.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelOpciones.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gl_panelOpciones.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNuevoGrupo)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textGrupo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNewButton))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 3, Short.MAX_VALUE)
+					.addGap(8))
 		);
 		
 		JLabel lblNewLabel = new JLabel("Rango:");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		textPrecioMin = new JTextField();
+		textPrecioMin.setColumns(10);
 		
-		comboMin = new JComboBox();
+		comboMin = new JComboBox<Coin>();
+		comboMin.setModel(new DefaultComboBoxModel<Coin>(Coin.values()));
 		
 		JLabel lblNewLabel_1 = new JLabel("/");
 		lblNewLabel_1.setDisplayedMnemonic(KeyEvent.VK_ENTER);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		textPrecioMax = new JTextField();
+		textPrecioMax.setColumns(10);
 		
-		comboMax = new JComboBox();
+		comboMax = new JComboBox<Coin>();
+		comboMax.setModel(new DefaultComboBoxModel<Coin>(Coin.values()));
 		
 		JLabel lblPrecioEspecial = new JLabel("Precio Especial:");
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
+		textPrecioEspecial = new JTextField();
+		textPrecioEspecial.setColumns(10);
 		
 		JButton button = new JButton("A\u00F1adir");
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
@@ -251,15 +286,15 @@ public class NuevoItemEquipo extends JInternalFrame {
 						.addComponent(lblPrecioEspecial)
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(textField_3)
+								.addComponent(textPrecioEspecial)
 								.addGroup(gl_panel_3.createSequentialGroup()
-									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+									.addComponent(textPrecioMin, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(comboMin, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(lblNewLabel_1)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)))
+									.addComponent(textPrecioMax, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
 								.addComponent(button, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
@@ -273,21 +308,21 @@ public class NuevoItemEquipo extends JInternalFrame {
 					.addComponent(lblNewLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textPrecioMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_1)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textPrecioMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(lblPrecioEspecial)
 					.addGap(8)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textPrecioEspecial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(button))
 					.addGap(0, 9, Short.MAX_VALUE))
 		);
 		panel_3.setLayout(gl_panel_3);
-		panel_1.setLayout(gl_panel_1);
+		panelOpciones.setLayout(gl_panelOpciones);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		
@@ -302,14 +337,21 @@ public class NuevoItemEquipo extends JInternalFrame {
 		
 		comboGrupo = new JComboBox();
 		
-		comboCategoria = new JComboBox();
+		comboCategoria = new JComboBox<Categoria_Equipo>();
+		comboCategoria.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				mainGUIController.refrescarGrupos();
+			}
+		});
+		comboCategoria.setModel(categoria);
 		
 		textPrecio = new JTextField();
 		textPrecio.setColumns(10);
 		
 		JLabel lblPesoenKg = new JLabel("Peso (en Kg):");
 		
-		comboMoneda = new JComboBox();
+		comboMoneda = new JComboBox<Coin>();
+		comboMoneda.setModel(moneda);
 		
 		textPeso = new JTextField();
 		textPeso.setColumns(10);
@@ -327,15 +369,15 @@ public class NuevoItemEquipo extends JInternalFrame {
 					.addGap(21)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(textPeso, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textNombre, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-							.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(gl_panel.createSequentialGroup()
 								.addComponent(textPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(comboMoneda, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE))
-							.addComponent(comboCategoria, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(comboGrupo, Alignment.LEADING, 0, 196, Short.MAX_VALUE)))
-					.addContainerGap(39, Short.MAX_VALUE))
+							.addComponent(comboCategoria, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(comboGrupo, 0, 196, Short.MAX_VALUE))
+						.addComponent(textNombre, GroupLayout.PREFERRED_SIZE, 241, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(22, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -361,12 +403,135 @@ public class NuevoItemEquipo extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPesoenKg)
 						.addComponent(textPeso, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(22, Short.MAX_VALUE))
+					.addContainerGap(16, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		container.setLayout(gl_container);
+		panelOpciones.setVisible(false);
+		pack();
 		setVisible(true);
+		try {
+			setSelected(true);
+		} catch (PropertyVetoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	
+	}
+	
+	public JTextField getTextNombre() {
+		return textNombre;
+	}
+
+	public void setTextNombre(JTextField textNombre) {
+		this.textNombre = textNombre;
+	}
+
+	public JComboBox getComboGrupo() {
+		return comboGrupo;
+	}
+
+	public void setComboGrupo(JComboBox comboGrupo) {
+		this.comboGrupo = comboGrupo;
+	}
+
+	public JTextField getTextPrecio() {
+		return textPrecio;
+	}
+
+	public void setTextPrecio(JTextField textPrecio) {
+		this.textPrecio = textPrecio;
+	}
+
+	public JTextField getTextPeso() {
+		return textPeso;
+	}
+
+	public void setTextPeso(JTextField textPeso) {
+		this.textPeso = textPeso;
+	}
+
+	public JTextField getTextGrupo() {
+		return textGrupo;
+	}
+
+	public void setTextGrupo(JTextField textGrupo) {
+		this.textGrupo = textGrupo;
+	}
+
+	public JTextField getTextPrecioMin() {
+		return textPrecioMin;
+	}
+
+	public void setTextPrecioMin(JTextField textPrecioMin) {
+		this.textPrecioMin = textPrecioMin;
+	}
+
+	public JTextField getTextPrecioMax() {
+		return textPrecioMax;
+	}
+
+	public void setTextPrecioMax(JTextField textPrecioMax) {
+		this.textPrecioMax = textPrecioMax;
+	}
+
+	public JComboBox<Coin> getComboMax() {
+		return comboMax;
+	}
+
+	public void setComboMax(JComboBox<Coin> comboMax) {
+		this.comboMax = comboMax;
+	}
+
+	public JComboBox<Coin> getComboMin() {
+		return comboMin;
+	}
+
+	public void setComboMin(JComboBox<Coin> comboMin) {
+		this.comboMin = comboMin;
+	}
+
+	public JComboBox<Coin> getComboMoneda() {
+		return comboMoneda;
+	}
+
+	public void setComboMoneda(JComboBox<Coin> comboMoneda) {
+		this.comboMoneda = comboMoneda;
+	}
+
+	public JComboBox<Categoria_Equipo> getComboCategoria() {
+		return comboCategoria;
+	}
+
+	public void setComboCategoria(JComboBox<Categoria_Equipo> comboCategoria) {
+		this.comboCategoria = comboCategoria;
+	}
+
+	public JTextField getTextPrecioEspecial() {
+		return textPrecioEspecial;
+	}
+
+	public void setTextPrecioEspecial(JTextField textPrecioEspecial) {
+		this.textPrecioEspecial = textPrecioEspecial;
+	}
+
+	
+
+	protected void salir() {
+		this.setVisible(false);
+	}
+
+	private void opciones() {
+		if(!panelOpciones.isVisible()){
+			panelOpciones.setVisible(true);
+			btnMasDetalles.setText("Menos Detalles");
+			this.pack();
+		}else{
+			panelOpciones.setVisible(false);
+			btnMasDetalles.setText("Mas Detalles");
+			this.pack();
+		}
+		
 	}
 }
 
