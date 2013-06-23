@@ -5,6 +5,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,7 +16,6 @@ import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
 import javax.swing.JCheckBox;
 import model.equipo.Categoria_Equipo;
-import model.equipo.Coin;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
@@ -28,6 +28,17 @@ import javax.swing.ButtonGroup;
 import java.awt.Component;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+
+import utilities.Coin;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.ImageIcon;
+import java.awt.Rectangle;
+import java.awt.Dimension;
+import javax.swing.JLayeredPane;
+import java.awt.FlowLayout;
 
 public class NuevoItemEquipo extends JInternalFrame {
 
@@ -35,26 +46,27 @@ public class NuevoItemEquipo extends JInternalFrame {
 	private MainGUIController mainGUIController;
 	private JTextField textNombre;
 	private JComboBox comboGrupo;
-	private JTextField textPrecio;
-	private JTextField textPeso;
+	private JFormattedTextField textPrecio;
+	private JFormattedTextField textPeso;
 	private JTextField textGrupo;
-	private JTextField textPrecioMin;
-	private JTextField textPrecioMax;
+	private JFormattedTextField textPrecioMin;
+	private JFormattedTextField textPrecioMax;
 	private JComboBox<Coin> comboMax;
 	private JComboBox<Coin> comboMin;
 	private JComboBox<Coin> comboMoneda;
 	private JComboBox<Categoria_Equipo> comboCategoria;
 	private JTextField textPrecioEspecial;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JPanel panelOpciones;
 	private JButton btnMasDetalles;
 	private DefaultComboBoxModel<Coin>moneda;
 	private DefaultComboBoxModel<Categoria_Equipo>categoria;
+	private JCheckBox chckbxPesoInfimo;
+	private JCheckBox chckbxPesoDespreciable;
 
 
 	public NuevoItemEquipo(final MainGUIController mainGUIController) {
-		super("Nuevo Equipo",true,true,true,true);
-		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
+		super("Nuevo Equipo",false,true,false,true);
+		setSize(new Dimension(570, 722));
 		
 		this.mainGUIController = mainGUIController;
 		moneda = new DefaultComboBoxModel<Coin>(Coin.values());
@@ -66,12 +78,13 @@ public class NuevoItemEquipo extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setBounds(100, 100, 450, 724);
+		setBounds(100, 100, 393, 531);
+		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		
 		JPanel container = new JPanel();
 		container.setAlignmentX(Component.LEFT_ALIGNMENT);
 		container.setAlignmentY(Component.TOP_ALIGNMENT);
-		getContentPane().add(container, BorderLayout.WEST);
+		getContentPane().add(container);
 		
 		JPanel panel = new JPanel();
 		
@@ -82,24 +95,17 @@ public class NuevoItemEquipo extends JInternalFrame {
 		JSeparator separator = new JSeparator();
 		GroupLayout gl_container = new GroupLayout(container);
 		gl_container.setHorizontalGroup(
-			gl_container.createParallelGroup(Alignment.LEADING)
+			gl_container.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_container.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_container.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_container.createSequentialGroup()
-							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(gl_container.createSequentialGroup()
-							.addComponent(panelOpciones, 0, 0, Short.MAX_VALUE)
-							.addGap(17))))
-				.addGroup(gl_container.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_container.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelOpciones, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_container.createSequentialGroup()
 							.addGap(10)
 							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE))
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(17, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		gl_container.setVerticalGroup(
 			gl_container.createParallelGroup(Alignment.LEADING)
@@ -109,16 +115,28 @@ public class NuevoItemEquipo extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelOpciones, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(5, Short.MAX_VALUE))
+					.addComponent(panelOpciones, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE)
+					.addGap(4)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(4, Short.MAX_VALUE))
 		);
-		gl_container.linkSize(SwingConstants.HORIZONTAL, new Component[] {panel, panelOpciones, panel_2});
+		gl_container.setAutoCreateContainerGaps(true);
 		
 		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				mainGUIController.addItem();
+			}
+		});
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mainGUIController.limpiar();
+			}
+		});
 		
 		btnMasDetalles = new JButton("Mas Detalles");
 		btnMasDetalles.addActionListener(new ActionListener() {
@@ -182,59 +200,75 @@ public class NuevoItemEquipo extends JInternalFrame {
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "  Peso  ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
-		JCheckBox chckbxPesoInfimo = new JCheckBox("Peso Infimo");
-		buttonGroup.add(chckbxPesoInfimo);
+		chckbxPesoInfimo = new JCheckBox("Peso Infimo");
+		chckbxPesoInfimo.setIcon(null);
+		chckbxPesoInfimo.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				checkPeso(arg0);
+			}
+		});
 		
-		JCheckBox chckbxPesoDespreciable = new JCheckBox("Peso Despreciable");
-		buttonGroup.add(chckbxPesoDespreciable);
+		chckbxPesoDespreciable = new JCheckBox("Peso Despreciable");
+		chckbxPesoDespreciable.setIcon(null);
+		chckbxPesoDespreciable.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				checkPeso(e);
+			}
+		});
 		
-		JCheckBox chckbxSinPeso = new JCheckBox("Sin Peso");
-		buttonGroup.add(chckbxSinPeso);
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setToolTipText("Estos art\u00EDculos pesan poco individualmente. Diez de ellos pesanmedio kilo.");
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Desarrollo JEE\\Workspace\\GDPA\\img\\icon-info.gif"));
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setToolTipText("Esos objetos no tienen peso apreciable y no deben ser tomados en cuenta para la carga a menos que sean llevados a centenares.");
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Desarrollo JEE\\Workspace\\GDPA\\img\\icon-info.gif"));
 		GroupLayout gl_panel_4 = new GroupLayout(panel_4);
 		gl_panel_4.setHorizontalGroup(
 			gl_panel_4.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_4.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(chckbxPesoInfimo)
-					.addGap(18)
+					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(chckbxPesoInfimo, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
 					.addComponent(chckbxPesoDespreciable)
-					.addGap(18)
-					.addComponent(chckbxSinPeso)
-					.addContainerGap(55, Short.MAX_VALUE))
+					.addContainerGap(39, Short.MAX_VALUE))
 		);
 		gl_panel_4.setVerticalGroup(
 			gl_panel_4.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_4.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
-						.addComponent(chckbxPesoInfimo)
+					.addGroup(gl_panel_4.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
 						.addComponent(chckbxPesoDespreciable)
-						.addComponent(chckbxSinPeso))
-					.addContainerGap(86, Short.MAX_VALUE))
+						.addComponent(lblNewLabel_3)
+						.addComponent(chckbxPesoInfimo, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+					.addContainerGap())
 		);
+		gl_panel_4.linkSize(SwingConstants.VERTICAL, new Component[] {chckbxPesoInfimo, chckbxPesoDespreciable, lblNewLabel_2, lblNewLabel_3});
 		panel_4.setLayout(gl_panel_4);
 		GroupLayout gl_panelOpciones = new GroupLayout(panelOpciones);
 		gl_panelOpciones.setHorizontalGroup(
 			gl_panelOpciones.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelOpciones.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panelOpciones.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panelOpciones.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_panelOpciones.createSequentialGroup()
-							.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(gl_panelOpciones.createParallelGroup(Alignment.TRAILING)
-							.addGroup(gl_panelOpciones.createSequentialGroup()
-								.addGroup(gl_panelOpciones.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(panel_4, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-									.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-								.addContainerGap(19, Short.MAX_VALUE))
-							.addGroup(gl_panelOpciones.createSequentialGroup()
-								.addComponent(lblNuevoGrupo)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(textGrupo, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-								.addGap(101)))))
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(gl_panelOpciones.createSequentialGroup()
+							.addGroup(gl_panelOpciones.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelOpciones.createSequentialGroup()
+									.addComponent(lblNuevoGrupo)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(textGrupo, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
+								.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE))
+							.addGap(7))))
 		);
 		gl_panelOpciones.setVerticalGroup(
 			gl_panelOpciones.createParallelGroup(Alignment.LEADING)
@@ -247,15 +281,21 @@ public class NuevoItemEquipo extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 3, Short.MAX_VALUE)
-					.addGap(8))
+					.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
+					.addGap(20))
 		);
 		
 		JLabel lblNewLabel = new JLabel("Rango:");
 		
-		textPrecioMin = new JTextField();
+		textPrecioMin = new JFormattedTextField(new Integer(0));
+		textPrecioMin.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				limpiarImputText(e);
+			}
+		});
 		textPrecioMin.setColumns(10);
 		
 		comboMin = new JComboBox<Coin>();
@@ -264,7 +304,13 @@ public class NuevoItemEquipo extends JInternalFrame {
 		JLabel lblNewLabel_1 = new JLabel("/");
 		lblNewLabel_1.setDisplayedMnemonic(KeyEvent.VK_ENTER);
 		
-		textPrecioMax = new JTextField();
+		textPrecioMax = new JFormattedTextField(new Integer(0));
+		textPrecioMax.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				limpiarImputText(e);
+			}
+		});
 		textPrecioMax.setColumns(10);
 		
 		comboMax = new JComboBox<Coin>();
@@ -338,14 +384,20 @@ public class NuevoItemEquipo extends JInternalFrame {
 		comboGrupo = new JComboBox();
 		
 		comboCategoria = new JComboBox<Categoria_Equipo>();
-		comboCategoria.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
+		comboCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				mainGUIController.refrescarGrupos();
 			}
 		});
 		comboCategoria.setModel(categoria);
 		
-		textPrecio = new JTextField();
+		textPrecio = new JFormattedTextField(new Integer(0));
+		textPrecio.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				limpiarImputText(arg0);
+			}
+		});
 		textPrecio.setColumns(10);
 		
 		JLabel lblPesoenKg = new JLabel("Peso (en Kg):");
@@ -353,7 +405,15 @@ public class NuevoItemEquipo extends JInternalFrame {
 		comboMoneda = new JComboBox<Coin>();
 		comboMoneda.setModel(moneda);
 		
-		textPeso = new JTextField();
+		
+		
+		textPeso = new JFormattedTextField(new Float(0));
+		textPeso.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				limpiarImputText(arg0);
+			}
+		});
 		textPeso.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -408,6 +468,7 @@ public class NuevoItemEquipo extends JInternalFrame {
 		panel.setLayout(gl_panel);
 		container.setLayout(gl_container);
 		panelOpciones.setVisible(false);
+		
 		pack();
 		setVisible(true);
 		try {
@@ -419,6 +480,32 @@ public class NuevoItemEquipo extends JInternalFrame {
 	
 	}
 	
+	protected void limpiarImputText(FocusEvent arg0) {
+		JFormattedTextField campo = (JFormattedTextField) arg0.getSource();
+		campo.setText("");
+		
+	}
+
+	protected void checkPeso(ItemEvent arg0) {
+		if(arg0.getStateChange() == ItemEvent.SELECTED){
+			if(chckbxPesoDespreciable == arg0.getSource())
+				chckbxPesoInfimo.setSelected(false);
+			
+			if(chckbxPesoInfimo == arg0.getSource()){
+				chckbxPesoDespreciable.setSelected(false);
+			}
+			
+				
+		textPeso.setText("");
+		textPeso.setEnabled(false);
+		}
+	
+		if(arg0.getStateChange() == ItemEvent.DESELECTED){
+			textPeso.setEnabled(true);
+		}
+		
+	}
+
 	public JTextField getTextNombre() {
 		return textNombre;
 	}
@@ -435,19 +522,19 @@ public class NuevoItemEquipo extends JInternalFrame {
 		this.comboGrupo = comboGrupo;
 	}
 
-	public JTextField getTextPrecio() {
+	public JFormattedTextField getTextPrecio() {
 		return textPrecio;
 	}
 
-	public void setTextPrecio(JTextField textPrecio) {
+	public void setTextPrecio(JFormattedTextField textPrecio) {
 		this.textPrecio = textPrecio;
 	}
 
-	public JTextField getTextPeso() {
+	public JFormattedTextField getTextPeso() {
 		return textPeso;
 	}
 
-	public void setTextPeso(JTextField textPeso) {
+	public void setTextPeso(JFormattedTextField textPeso) {
 		this.textPeso = textPeso;
 	}
 
@@ -459,19 +546,19 @@ public class NuevoItemEquipo extends JInternalFrame {
 		this.textGrupo = textGrupo;
 	}
 
-	public JTextField getTextPrecioMin() {
+	public JFormattedTextField getTextPrecioMin() {
 		return textPrecioMin;
 	}
 
-	public void setTextPrecioMin(JTextField textPrecioMin) {
+	public void setTextPrecioMin(JFormattedTextField textPrecioMin) {
 		this.textPrecioMin = textPrecioMin;
 	}
 
-	public JTextField getTextPrecioMax() {
+	public JFormattedTextField getTextPrecioMax() {
 		return textPrecioMax;
 	}
 
-	public void setTextPrecioMax(JTextField textPrecioMax) {
+	public void setTextPrecioMax(JFormattedTextField textPrecioMax) {
 		this.textPrecioMax = textPrecioMax;
 	}
 
@@ -515,7 +602,21 @@ public class NuevoItemEquipo extends JInternalFrame {
 		this.textPrecioEspecial = textPrecioEspecial;
 	}
 
-	
+	public JCheckBox getChckbxPesoInfimo() {
+		return chckbxPesoInfimo;
+	}
+
+	public void setChckbxPesoInfimo(JCheckBox chckbxPesoInfimo) {
+		this.chckbxPesoInfimo = chckbxPesoInfimo;
+	}
+
+	public JCheckBox getChckbxPesoDespreciable() {
+		return chckbxPesoDespreciable;
+	}
+
+	public void setChckbxPesoDespreciable(JCheckBox chckbxPesoDespreciable) {
+		this.chckbxPesoDespreciable = chckbxPesoDespreciable;
+	}
 
 	protected void salir() {
 		this.setVisible(false);
