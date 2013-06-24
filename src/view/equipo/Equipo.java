@@ -1,4 +1,4 @@
-package view;
+package view.equipo;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
@@ -13,6 +13,14 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JToggleButton;
 
 import controller.MainGUIController;
+import javax.swing.JTextPane;
+import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import javax.swing.BoxLayout;
 
 
 
@@ -31,6 +39,7 @@ public class Equipo extends JInternalFrame {
 	 * @param mainGUIController 
 	 */
 	MainGUIController mainGUIController;
+	private JPanel contenedor;
 	
 	public Equipo(MainGUIController mainGUIController) {
 		super("Equipo",true,true,true,true);
@@ -57,7 +66,7 @@ public class Equipo extends JInternalFrame {
 			
 			JToggleButton tglbtnNewToggleButton_2 = new JToggleButton("New toggle button");
 			
-			JToggleButton tglbtnNewToggleButton_3 = new JToggleButton("New toggle button");
+			JToggleButton tglbtnNewToggleButton_3 = new JToggleButton("Nuevo Objeto");
 			tglbtnNewToggleButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					nuevoItem();
@@ -65,19 +74,24 @@ public class Equipo extends JInternalFrame {
 
 				
 			});
+			
+			JScrollPane scrollPane = new JScrollPane();
 			GroupLayout gl_panel = new GroupLayout(panel);
 			gl_panel.setHorizontalGroup(
 				gl_panel.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_panel.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(tglbtnNewToggleButton)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(tglbtnNewToggleButton_1)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(tglbtnNewToggleButton_2)
+						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(scrollPane, Alignment.LEADING)
+							.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+								.addComponent(tglbtnNewToggleButton)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(tglbtnNewToggleButton_1)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(tglbtnNewToggleButton_2)))
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(tglbtnNewToggleButton_3)
-						.addContainerGap(101, Short.MAX_VALUE))
+						.addContainerGap(123, Short.MAX_VALUE))
 			);
 			gl_panel.setVerticalGroup(
 				gl_panel.createParallelGroup(Alignment.LEADING)
@@ -88,8 +102,14 @@ public class Equipo extends JInternalFrame {
 							.addComponent(tglbtnNewToggleButton_1)
 							.addComponent(tglbtnNewToggleButton_2)
 							.addComponent(tglbtnNewToggleButton_3))
-						.addContainerGap(366, Short.MAX_VALUE))
+						.addGap(8)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(124, Short.MAX_VALUE))
 			);
+			
+			contenedor = new JPanel();
+			scrollPane.setViewportView(contenedor);
+			contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
 			panel.setLayout(gl_panel);
 			setVisible(true);
 	}
@@ -97,4 +117,11 @@ public class Equipo extends JInternalFrame {
 		mainGUIController.nuevoItem();
 		
 	}
+	public JPanel getContenedor() {
+		return contenedor;
+	}
+	public void setContenedor(JPanel contenedor) {
+		this.contenedor = contenedor;
+	}
+	
 }

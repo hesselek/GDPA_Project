@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class ItemEquipo {
 	
 	@Id
-	@Column(name = "nombre", unique=true, nullable=false)
+	@Column(name = "nombre", unique=true, nullable=false, length=512)
 	private String nombre;
 	private byte categoria;
 	private float peso;

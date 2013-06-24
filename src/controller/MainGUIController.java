@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -8,9 +10,10 @@ import model.PersistenceUnit;
 import model.equipo.Equipo_Model;
 import model.equipo.ItemEquipo;
 import utilities.Coin;
-import view.Equipo;
 import view.MainGUI;
-import view.NuevoItemEquipo;
+import view.equipo.Equipo;
+import view.equipo.NuevoItemEquipo;
+import view.equipo.PaneRopa;
 
 
 public class MainGUIController {
@@ -45,6 +48,7 @@ public class MainGUIController {
 
 	public void DialogoEquipo() {
 		
+		
 	if(equipo == null){
 			equipo = new Equipo(this);
 			frame.getDesktopPane().add(equipo);
@@ -52,7 +56,10 @@ public class MainGUIController {
 		}else{
 			equipo.setVisible(true);
 	
-		}	
+		}
+	
+	PaneRopa ropa = new PaneRopa(modelEquipo.cargarDatosModelo(0,false));
+	equipo.getContenedor().add(ropa);
 		
 	}
 
@@ -115,7 +122,7 @@ public class MainGUIController {
 		}
 		if(item.getNombre() != null && (item.getPrecioMax() !=0 || item.isEspecial()))
 				modelEquipo.nuevoItem(item);
-		
+		limpiar();
 		//TODO: queda especificar lo del precio especial
 	}
 

@@ -1,4 +1,4 @@
-package view;
+package view.equipo;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;

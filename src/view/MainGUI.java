@@ -9,7 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 
-import view.Equipo;
+import view.equipo.Equipo;
 
 import org.jdesktop.swingx.JXStatusBar;
 import controller.MainGUIController;

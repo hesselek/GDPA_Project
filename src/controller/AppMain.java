@@ -4,20 +4,12 @@ package controller;
 
 
 import java.awt.EventQueue;
-import java.beans.PropertyVetoException;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.swing.UIManager;
-
-
 
 import model.PersistenceUnit;
-import model.Todo;
 
 
-import view.MainGUI;
+
+
 
 
 
