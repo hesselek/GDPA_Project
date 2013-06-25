@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -58,7 +56,7 @@ public class MainGUIController {
 	
 		}
 	
-	PaneRopa ropa = new PaneRopa(modelEquipo.cargarDatosModelo(0,false));
+	PaneRopa ropa = new PaneRopa(modelEquipo.cargarDatosModelo(0),this);
 	equipo.getContenedor().add(ropa);
 		
 	}
@@ -122,8 +120,10 @@ public class MainGUIController {
 		}
 		if(item.getNombre() != null && (item.getPrecioMax() !=0 || item.isEspecial()))
 				modelEquipo.nuevoItem(item);
+		if(item.isEspecial())
+				modelEquipo.precioEspecial(item.getNombre(),nuevoItemEquipo.getTextPrecioEspecial().getText());
 		limpiar();
-		//TODO: queda especificar lo del precio especial
+	
 	}
 
 
@@ -165,11 +165,11 @@ public class MainGUIController {
 
 	public void limpiar() {
 		//TODO:QUedan por limpiar algunas cosas...
-		nuevoItemEquipo.getTextPrecio().setText("");
+		nuevoItemEquipo.getTextPrecio().setValue(new Integer(0));
 		nuevoItemEquipo.getTextNombre().setText("");
-		nuevoItemEquipo.getTextPrecioMax().setText("");
-		nuevoItemEquipo.getTextPrecioMin().setText("");
-		nuevoItemEquipo.getTextPeso().setText("");
+		nuevoItemEquipo.getTextPrecioMax().setValue(new Integer(0));
+		nuevoItemEquipo.getTextPrecioMin().setValue(new Integer(0));
+		nuevoItemEquipo.getTextPeso().setValue(new Float(0));
 		nuevoItemEquipo.getTextGrupo().setText("");
 		nuevoItemEquipo.getTextPrecioEspecial().setText("");
 		nuevoItemEquipo.getComboCategoria().setSelectedIndex(0);
@@ -181,6 +181,13 @@ public class MainGUIController {
 		nuevoItemEquipo.getChckbxPesoInfimo().setSelected(false);
 		
 		
+		
+	}
+
+
+
+	public Object getSpecialPrice(String nombre) {
+		return modelEquipo.getSpecialPrice(nombre);
 		
 	}
 

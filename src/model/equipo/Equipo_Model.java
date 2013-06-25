@@ -5,8 +5,6 @@ package model.equipo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -58,16 +56,28 @@ public class Equipo_Model {
 	
 	}
 
-	public List<ItemEquipo> cargarDatosModelo(int i, boolean b) {
+	public List<ItemEquipo> cargarDatosModelo(int i) {
 		List<ItemEquipo>lista = new ArrayList<ItemEquipo>();
-		if(b){
-			//TODO: Cuando Hay que seleccionar peso;
-		}else{
 			Query q= em.createQuery("Select I FROM ItemEquipo I WHERE I.categoria=?1");
 			q.setParameter(1, i);
 			lista = q.getResultList();
-		}
 		return lista;
+	}
+
+	public void precioEspecial(String nombre, String text) {
+		em.getTransaction().begin();
+		Query q = em.createNativeQuery("Insert into GENERIC.PUBLIC.PRECIOESPECIAL(NOMBRE,PRECIO) VALUES(?1,?2)");
+		q.setParameter(1, nombre);
+		q.setParameter(2, text);
+		q.executeUpdate();
+		em.getTransaction().commit();
+		
+	}
+
+	public Object getSpecialPrice(String nombre) {
+		Query q= em.createNativeQuery("SELECT PRECIO FROM GENERIC.PUBLIC.PRECIOESPECIAL p WHERE p.NOMBRE=?1");
+		q.setParameter(1, nombre);
+		return q.getSingleResult();
 	}
 
 

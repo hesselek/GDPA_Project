@@ -99,13 +99,16 @@ public class NuevoItemEquipo extends JInternalFrame {
 				.addGroup(gl_container.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_container.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panelOpciones, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_container.createSequentialGroup()
 							.addGap(10)
 							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE))
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
+				.addGroup(Alignment.LEADING, gl_container.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_container.setVerticalGroup(
 			gl_container.createParallelGroup(Alignment.LEADING)
@@ -115,10 +118,10 @@ public class NuevoItemEquipo extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelOpciones, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE)
-					.addGap(4)
+					.addComponent(panelOpciones, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(4, Short.MAX_VALUE))
+					.addContainerGap(6, Short.MAX_VALUE))
 		);
 		gl_container.setAutoCreateContainerGaps(true);
 		
@@ -254,21 +257,19 @@ public class NuevoItemEquipo extends JInternalFrame {
 			gl_panelOpciones.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelOpciones.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panelOpciones.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_panelOpciones.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panelOpciones.createSequentialGroup()
-							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(lblNuevoGrupo)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textGrupo, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panelOpciones.createSequentialGroup()
-							.addGroup(gl_panelOpciones.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panelOpciones.createSequentialGroup()
-									.addComponent(lblNuevoGrupo)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(textGrupo, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
-								.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE))
-							.addGap(7))))
+							.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+							.addGap(11)))
+					.addGap(3))
 		);
 		gl_panelOpciones.setVerticalGroup(
 			gl_panelOpciones.createParallelGroup(Alignment.LEADING)
@@ -279,12 +280,12 @@ public class NuevoItemEquipo extends JInternalFrame {
 						.addComponent(textGrupo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNewButton))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
-					.addGap(20))
+					.addGap(38))
 		);
 		
 		JLabel lblNewLabel = new JLabel("Rango:");
@@ -320,8 +321,6 @@ public class NuevoItemEquipo extends JInternalFrame {
 		
 		textPrecioEspecial = new JTextField();
 		textPrecioEspecial.setColumns(10);
-		
-		JButton button = new JButton("A\u00F1adir");
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
@@ -329,23 +328,21 @@ public class NuevoItemEquipo extends JInternalFrame {
 					.addContainerGap()
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNewLabel)
-						.addComponent(lblPrecioEspecial)
 						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(textPrecioEspecial)
-								.addGroup(gl_panel_3.createSequentialGroup()
-									.addComponent(textPrecioMin, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(comboMin, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(lblNewLabel_1)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(textPrecioMax, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(lblPrecioEspecial)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textPrecioEspecial, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+						.addGroup(gl_panel_3.createSequentialGroup()
+							.addComponent(textPrecioMin, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(button, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-								.addComponent(comboMax, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(comboMin, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblNewLabel_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textPrecioMax, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboMax, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
 		);
 		gl_panel_3.setVerticalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
@@ -360,12 +357,10 @@ public class NuevoItemEquipo extends JInternalFrame {
 						.addComponent(lblNewLabel_1)
 						.addComponent(textPrecioMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblPrecioEspecial)
-					.addGap(8)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textPrecioEspecial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button))
-					.addGap(0, 9, Short.MAX_VALUE))
+						.addComponent(lblPrecioEspecial)
+						.addComponent(textPrecioEspecial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(40, Short.MAX_VALUE))
 		);
 		panel_3.setLayout(gl_panel_3);
 		panelOpciones.setLayout(gl_panelOpciones);
